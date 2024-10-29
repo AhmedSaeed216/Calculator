@@ -13,16 +13,48 @@ const Screen = () => {
         console.log(text)
     };
 
-    const calculation=()=>{
-        const result =eval(display);
-        setdisplay(result)
-        console.log(result)
-    }
+    // const calculation=()=>{
+    //     const result =eval(display);
+    //     setdisplay(result)
+    //     console.log(result)
+    // }
 
+
+    const calculation = (operation) => {
+        let result;
+
+        if (operation === 'sqrt') {
+            // Calculate square root
+            const number = parseFloat(display);
+            if (!isNaN(number)) {
+                result = Math.sqrt(number);
+            } else {
+                result = 'Error'; // Handle error for invalid input
+            }
+        } else if (operation === 'square') {
+            // Calculate square
+            const number = parseFloat(display);
+            if (!isNaN(number)) {
+                result = number * number;
+            } else {
+                result = 'Error'; // Handle error for invalid input
+            }
+        } else {
+            // Evaluate the expression
+            try {
+                result = eval(display);
+            } catch (error) {
+                result = 'Error'; // Handle any evaluation errors
+            }
+        }
+
+        setdisplay(result !== undefined ? result.toString() : 'Error');
+        console.log(result);
+    };
     return (
-        <div className=' w-96 h-auto   border-2 border-red-900'>
+        <div className=' flex-auto justify-center items-center w-96 h-auto   border-2 border-red-900'>
                 <Display value={display}/>
-            <div className='  grid grid-cols-3 '>
+            <div className='  grid grid-cols-3 gap-2 '>
 
                 <Button text={1} onclick={() => clickfn("1")} />
                 <Button text={2} onclick={() => clickfn("2")} />
@@ -38,8 +70,14 @@ const Screen = () => {
                 <Button text={"-"} onclick={() => clickfn("-")} />
                 <Button text={"*"} onclick={() => clickfn("*")} />
                 <Button text={"/"} onclick={() => clickfn("/")} />
-                <Button text={"="} onclick={() => calculation()} />
+                <Button text={"="} onclick={() => calculation()}  className="row-span-2 items-center text-2xl"/>
+                <Button text={"sqrt"} onclick={() => calculation("sqrt")} />
+                <Button text={"square"} onclick={() => calculation("square")} />
+                <Button text={"CLR"} onclick={()=>{setdisplay('')}} className="col-span-3 text-wrap  text-red-950 text-4xl"   />
             </div>
+            
+
+            
         </div>
     )
 }

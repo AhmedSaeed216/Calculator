@@ -1,19 +1,35 @@
-import { useState } from 'react'
-import Screen from './components/Screen'
-import Navbar from './components/Navbar'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Screen from './components/Screen'; // Import the Screen component
+import About from './components/About';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 
-function App() {
-//   const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-  <Navbar/>
-      <Screen/>
-    </>
-  )
-}
+      <>
+    <Router>
+      <div className="app">
+        {/* Navigation */}
+        <nav className="bg-gray-800 p-1 mb-2 text-white">
+          <ul className=' flex  flex-row gap-5 font-serif text-2xl p-4 m-3 '>
+            <li className='hover:text-red-600 cursor-pointer hover:underline'><Link to="/">Home</Link></li>
+            <li className='hover:text-red-600 cursor-pointer hover:underline'><Link to="/about">About</Link></li>
+            <li className='hover:text-red-600 cursor-pointer hover:underline'><Link to="/contact">Contact</Link></li>
+          </ul>
+        </nav>
 
-export default App
+        {/* Define Routes */}
+        <Routes>
+          <Route path="/" element={<Screen />} /> {/* Display the calculator here */}
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
+    </Router>
+    <Footer/>
+    </>
+  );
+};
+
+export default App;
